@@ -1,0 +1,2 @@
+sls deploy = da redeploy la tot
+sls deploy -f createAuction = va da deploy doar la functia createAuction

@@ -1,0 +1,4 @@
+https://github.com/arielweinberger/sls-base
+https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
+https://github.com/arielweinberger/course-auction-service/tree/df75d1e5373b756febfd8c566ddf79391d6724f6
+https://www.npmjs.com/package/serverless-offline
