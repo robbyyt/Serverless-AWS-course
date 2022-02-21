@@ -1,6 +1,8 @@
 import AWS from 'aws-sdk';
-import commonMiddleware from '../lib/commonMiddleware';
+import validator from '@middy/validator';
 import createError from 'http-errors';
+import commonMiddleware from '../lib/commonMiddleware';
+import getAuctionsSchema from '../lib/schemas/getAuctionsSchema';
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient();
 /**
@@ -10,12 +12,23 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
  * @returns
  */
 async function getAuctions(event, context) {
+  const { status } = event.queryStringParameters;
+
   let auctions;
+  const params = {
+    TableName: process.env.AUCTIONS_TABLE_NAME,
+    IndexName: 'statusAndEndDate',
+    KeyConditionExpression: '#status = :status',
+    ExpressionAttributeValues: {
+      ':status': status?.toUpperCase(),
+    },
+    ExpressionAttributeNames: {
+      '#status': 'status',
+    },
+  };
 
   try {
-    const result = await dynamoDB.scan({
-      TableName: process.env.AUCTIONS_TABLE_NAME
-    }).promise();
+    const result = await dynamoDB.query(params).promise();
 
     auctions = result.Items;
 
@@ -31,5 +44,13 @@ async function getAuctions(event, context) {
   };
 }
 
-export const handler = commonMiddleware(getAuctions);
+export const handler = commonMiddleware(getAuctions).use(
+   validator({
+    inputSchema: getAuctionsSchema,
+    ajvOptions: {
+      useDefaults: true,
+      strict: false,
+    },
+  })
+);
 
