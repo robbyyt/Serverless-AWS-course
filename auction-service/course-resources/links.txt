@@ -6,3 +6,4 @@ https://github.com/middyjs/middy
 https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#query-property
 https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#update-property
 https://json-schema.org/
+https://github.com/arielweinberger/serverless-auth0-authorizer
